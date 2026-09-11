@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            min-height: 100vh;
+            padding: 40px 15px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #1d3557;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #457b9d;
+            box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            padding: 10px 0;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: normal;
+        }
+
+        .radio-option input {
+            width: auto;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .error {
+            color: #d90429;
+            font-size: 13px;
+            margin-top: 5px;
+            min-height: 17px;
+        }
+
+        .invalid {
+            border-color: #d90429 !important;
+        }
+
+        .valid {
+            border-color: #2a9d8f !important;
+        }
+
+        .success-message {
+            display: none;
+            background: #d8f3dc;
+            color: #1b4332;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 75px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #457b9d;
+            font-weight: bold;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .strength-bar {
+            height: 7px;
+            background: #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0;
+            transition: 0.3s;
+        }
+
+        .weak {
+            width: 33%;
+            background: #e63946;
+        }
+
+        .medium {
+            width: 66%;
+            background: #f4a261;
+        }
+
+        .strong {
+            width: 100%;
+            background: #2a9d8f;
+        }
+
+        .requirements {
+            margin-top: 10px;
+            padding-left: 20px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .requirements li {
+            margin: 4px 0;
+        }
+
+        .requirements .met {
+            color: #2a9d8f;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn {
+            background: #1d3557;
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background: #457b9d;
+        }
+
+        .reset-btn {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .reset-btn:hover {
+            background: #ced4da;
+        }
+
+        .required {
+            color: #d90429;
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .form-card {
+                padding: 25px 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="form-card">
+
+        <h1>Registration Form</h1>
+        <p class="subtitle">Create your account by filling in the details below.</p>
+
+        <div id="successMessage" class="success-message">
+            Registration successful!
+        </div>
+
+        <form id="registrationForm" novalidate>
+
+            <div class="form-grid">
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="fullName">
+                        Full Name <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        minlength="3"
+                        maxlength="50"
+                        autocomplete="name"
+                        required
+                        aria-describedby="fullNameError"
+                    >
+
+                    <span class="error" id="fullNameError"></span>
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">
+                        Email Address <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="example@gmail.com"
+                        autocomplete="email"
+                        required
+                        aria-describedby="emailError"
+                    >
+
+                    <span class="error" id="emailError"></span>
+                </div>
+
+
+                <!-- Phone -->
+                <div class="form-group">
+                    <label for="phone">
+                        Phone Number <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="+91 9876543210"
+                        autocomplete="tel"
+                        required
+                        aria-describedby="phoneError"
+                    >
+
+                    <span class="error" id="phoneError"></span>
+                </div>
+
+
+                <!-- Date of Birth -->
+                <div class="form-group">
+                    <label for="dob">
+                        Date of Birth <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dob"
+                        name="dob"
+                        autocomplete="bday"
+                        required
+                        aria-describedby="dobError"
+                    >
+
+                    <span class="error" id="dobError"></span>
+                </div>
+
+
+                <!-- Gender -->
+                <div class="form-group full-width">
+                    <label>
+                        Gender <span class="required">*</span>
+                    </label>
+
+                    <div class="radio-group">
+
+                        <label class="radio-option">
+                            <input type="radio" name="gender" value="Male">
+                            Male
+                        </label>
+
+                        <label class="radio-option">
+                            <input type="radio" name="gender" value="Female">
+                            Female
+                        </label>
+
+                        <label class="radio-option">
+                            <input type="radio" name="gender" value="Other">
+                            Other
+                        </label>
+
+                        <label class="radio-option">
+                            <input type="radio" name="gender" value="Prefer not to say">
+                            Prefer not to say
+                        </label>
+
+                    </div>
+
+                    <span class="error" id="genderError"></span>
+                </div>
+
+
+                <!-- Address -->
+                <div class="form-group full-width">
+                    <label for="address">
+                        Address <span class="required">*</span>
+                    </label>
+
+                    <textarea
+                        id="address"
+                        name="address"
+                        placeholder="Enter your complete address"
+                        minlength="10"
+                        maxlength="200"
+                        autocomplete="street-address"
+                        required
+                        aria-describedby="addressError"
+                    ></textarea>
+
+                    <span class="error" id="addressError"></span>
+                </div>
+
+
+                <!-- City -->
+                <div class="form-group">
+                    <label for="city">
+                        City <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="Enter your city"
+                        autocomplete="address-level2"
+                        required
+                        aria-describedby="cityError"
+                    >
+
+                    <span class="error" id="cityError"></span>
+                </div>
+
+
+                <!-- State -->
+                <div class="form-group">
+                    <label for="state">
+                        State <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="state"
+                        name="state"
+                        autocomplete="address-level1"
+                        required
+                        aria-describedby="stateError"
+                    >
+                        <option value="">Select State</option>
+                        <option>Andhra Pradesh</option>
+                        <option>Telangana</option>
+                        <option>Karnataka</option>
+                        <option>Tamil Nadu</option>
+                        <option>Kerala</option>
+                        <option>Maharashtra</option>
+                        <option>Delhi</option>
+                        <option>Gujarat</option>
+                        <option>West Bengal</option>
+                        <option>Rajasthan</option>
+                    </select>
+
+                    <span class="error" id="stateError"></span>
+                </div>
+
+
+                <!-- Country -->
+                <div class="form-group">
+                    <label for="country">
+                        Country <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="country"
+                        name="country"
+                        autocomplete="country"
+                        required
+                        aria-describedby="countryError"
+                    >
+                        <option value="">Select Country</option>
+                        <option value="India">India</option>
+                        <option value="USA">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Germany">Germany</option>
+                    </select>
+
+                    <span class="error" id="countryError"></span>
+                </div>
+
+
+                <!-- PIN -->
+                <div class="form-group">
+                    <label for="pin">
+                        PIN / ZIP Code <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pin"
+                        name="pin"
+                        placeholder="Enter PIN / ZIP code"
+                        autocomplete="postal-code"
+                        required
+                        aria-describedby="pinError"
+                    >
+
+                    <span class="error" id="pinError"></span>
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">
+                        Password <span class="required">*</span>
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a strong password"
+                            minlength="8"
+                            maxlength="30"
+                            autocomplete="new-password"
+                            required
+                            aria-describedby="passwordError"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <div class="password-strength">
+                        Strength: <span id="strengthText">None</span>
+
+                        <div class="strength-bar">
+                            <div id="strengthFill" class="strength-fill"></div>
+                        </div>
+                    </div>
+
+                    <ul class="requirements">
+                        <li id="reqLength">Minimum 8 characters</li>
+                        <li id="reqUpper">Uppercase letter</li>
+                        <li id="reqLower">Lowercase letter</li>
+                        <li id="reqNumber">Number</li>
+                        <li id="reqSpecial">Special character</li>
+                    </ul>
+
+                    <span class="error" id="passwordError"></span>
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        Confirm Password <span class="required">*</span>
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Re-enter your password"
+                            autocomplete="new-password"
+                            required
+                            aria-describedby="confirmPasswordError"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="toggleConfirmPassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <span class="error" id="confirmPasswordError"></span>
+                </div>
+
+
+                <!-- Terms -->
+                <div class="form-group full-width">
+
+                    <div class="checkbox-group">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            name="terms"
+                            required
+                            aria-describedby="termsError"
+                        >
+
+                        <label for="terms">
+                            I agree to the Terms and Conditions
+                            <span class="required">*</span>
+                        </label>
+
+                    </div>
+
+                    <span class="error" id="termsError"></span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="buttons">
+
+                <button type="submit" class="submit-btn">
+                    Register
+                </button>
+
+                <button type="reset" class="reset-btn" id="resetButton">
+                    Clear
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // Get form elements
+    const form = document.getElementById("registrationForm");
+
+    const fullName = document.getElementById("fullName");
+    const email = document.getElementById("email");
+    const phone = document.getElementById("phone");
+    const dob = document.getElementById("dob");
+    const address = document.getElementById("address");
+    const city = document.getElementById("city");
+    const state = document.getElementById("state");
+    const country = document.getElementById("country");
+    const pin = document.getElementById("pin");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const terms = document.getElementById("terms");
+
+    const successMessage = document.getElementById("successMessage");
+
+
+    // Display error
+    function showError(input, errorId, message) {
+
+        const errorElement = document.getElementById(errorId);
+
+        errorElement.textContent = message;
+
+        if (input) {
+            input.classList.add("invalid");
+            input.classList.remove("valid");
+            input.setAttribute("aria-invalid", "true");
+        }
+    }
+
+
+    // Display valid state
+    function showValid(input, errorId) {
+
+        const errorElement = document.getElementById(errorId);
+
+        errorElement.textContent = "";
+
+        if (input) {
+            input.classList.remove("invalid");
+            input.classList.add("valid");
+            input.setAttribute("aria-invalid", "false");
+        }
+    }
+
+
+    // Full Name validation
+    function validateName() {
+
+        const value = fullName.value.trim();
+
+        if (value === "") {
+            showError(fullName, "fullNameError", "Full name is required.");
+            return false;
+        }
+
+        if (value.length < 3) {
+            showError(fullName, "fullNameError",
+                "Name must contain at least 3 characters.");
+            return false;
+        }
+
+        if (value.length > 50) {
+            showError(fullName, "fullNameError",
+                "Name cannot exceed 50 characters.");
+            return false;
+        }
+
+        if (!/^[A-Za-z ]+$/.test(value)) {
+            showError(fullName, "fullNameError",
+                "Name can contain only letters and spaces.");
+            return false;
+        }
+
+        showValid(fullName, "fullNameError");
+        return true;
+    }
+
+
+    // Email validation
+    function validateEmail() {
+
+        const value = email.value.trim();
+
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (value === "") {
+            showError(email, "emailError",
+                "Email address is required.");
+            return false;
+        }
+
+        if (!emailPattern.test(value)) {
+            showError(email, "emailError",
+                "Please enter a valid email address.");
+            return false;
+        }
+
+        showValid(email, "emailError");
+        return true;
+    }
+
+
+    // Phone validation
+    function validatePhone() {
+
+        const value = phone.value.trim();
+
+        const phonePattern =
+            /^\+?[0-9\s-]{10,15}$/;
+
+        if (value === "") {
+            showError(phone, "phoneError",
+                "Phone number is required.");
+            return false;
+        }
+
+        if (!phonePattern.test(value)) {
+            showError(phone, "phoneError",
+                "Enter a valid phone number.");
+            return false;
+        }
+
+        showValid(phone, "phoneError");
+        return true;
+    }
+
+
+    // Date of Birth validation
+    function validateDOB() {
+
+        const value = dob.value;
+
+        if (value === "") {
+            showError(dob, "dobError",
+                "Date of birth is required.");
+            return false;
+        }
+
+        const birthDate = new Date(value);
+        const today = new Date();
+
+        if (birthDate > today) {
+            showError(dob, "dobError",
+                "Date of birth cannot be in the future.");
+            return false;
+        }
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+
+        const monthDifference =
+            today.getMonth() - birthDate.getMonth();
+
+        if (
+            monthDifference < 0 ||
+            (monthDifference === 0 &&
+                today.getDate() < birthDate.getDate())
+        ) {
+            age--;
+        }
+
+        if (age < 18) {
+            showError(dob, "dobError",
+                "You must be at least 18 years old.");
+            return false;
+        }
+
+        showValid(dob, "dobError");
+        return true;
+    }
+
+
+    // Gender validation
+    function validateGender() {
+
+        const selected =
+            document.querySelector('input[name="gender"]:checked');
+
+        const error = document.getElementById("genderError");
+
+        if (!selected) {
+            error.textContent = "Please select your gender.";
+            return false;
+        }
+
+        error.textContent = "";
+        return true;
+    }
+
+
+    // Address validation
+    function validateAddress() {
+
+        const value = address.value.trim();
+
+        if (value === "") {
+            showError(address, "addressError",
+                "Address is required.");
+            return false;
+        }
+
+        if (value.length < 10) {
+            showError(address, "addressError",
+                "Address must contain at least 10 characters.");
+            return false;
+        }
+
+        if (value.length > 200) {
+            showError(address, "addressError",
+                "Address cannot exceed 200 characters.");
+            return false;
+        }
+
+        showValid(address, "addressError");
+        return true;
+    }
+
+
+    // City validation
+    function validateCity() {
+
+        const value = city.value.trim();
+
+        if (value === "") {
+            showError(city, "cityError",
+                "City is required.");
+            return false;
+        }
+
+        if (!/^[A-Za-z ]+$/.test(value)) {
+            showError(city, "cityError",
+                "Please enter a valid city name.");
+            return false;
+        }
+
+        showValid(city, "cityError");
+        return true;
+    }
+
+
+    // State validation
+    function validateState() {
+
+        if (state.value === "") {
+            showError(state, "stateError",
+                "Please select your state.");
+            return false;
+        }
+
+        showValid(state, "stateError");
+        return true;
+    }
+
+
+    // Country validation
+    function validateCountry() {
+
+        if (country.value === "") {
+            showError(country, "countryError",
+                "Please select your country.");
+            return false;
+        }
+
+        showValid(country, "countryError");
+        return true;
+    }
+
+
+    // PIN validation
+    function validatePin() {
+
+        const value = pin.value.trim();
+
+        if (value === "") {
+            showError(pin, "pinError",
+                "PIN / ZIP code is required.");
+            return false;
+        }
+
+        if (country.value === "India") {
+
+            if (!/^[1-9][0-9]{5}$/.test(value)) {
+
+                showError(pin, "pinError",
+                    "Indian PIN code must contain 6 digits.");
+
+                return false;
+            }
+
+        } else {
+
+            if (!/^[A-Za-z0-9 -]{3,10}$/.test(value)) {
+
+                showError(pin, "pinError",
+                    "Please enter a valid ZIP / postal code.");
+
+                return false;
+            }
+        }
+
+        showValid(pin, "pinError");
+        return true;
+    }
+
+
+    // Password requirements
+    function updatePasswordRequirements() {
+
+        const value = password.value;
+
+        const hasLength = value.length >= 8;
+        const hasUpper = /[A-Z]/.test(value);
+        const hasLower = /[a-z]/.test(value);
+        const hasNumber = /[0-9]/.test(value);
+        const hasSpecial = /[^A-Za-z0-9]/.test(value);
+
+        document.getElementById("reqLength")
+            .classList.toggle("met", hasLength);
+
+        document.getElementById("reqUpper")
+            .classList.toggle("met", hasUpper);
+
+        document.getElementById("reqLower")
+            .classList.toggle("met", hasLower);
+
+        document.getElementById("reqNumber")
+            .classList.toggle("met", hasNumber);
+
+        document.getElementById("reqSpecial")
+            .classList.toggle("met", hasSpecial);
+
+
+        // Password strength
+        let score = 0;
+
+        if (hasLength) score++;
+        if (hasUpper) score++;
+        if (hasLower) score++;
+        if (hasNumber) score++;
+        if (hasSpecial) score++;
+
+        const strengthText =
+            document.getElementById("strengthText");
+
+        const strengthFill =
+            document.getElementById("strengthFill");
+
+        strengthFill.className = "strength-fill";
+
+        if (value.length === 0) {
+
+            strengthText.textContent = "None";
+
+        } else if (score <= 2) {
+
+            strengthText.textContent = "Weak";
+            strengthFill.classList.add("weak");
+
+        } else if (score <= 4) {
+
+            strengthText.textContent = "Medium";
+            strengthFill.classList.add("medium");
+
+        } else {
+
+            strengthText.textContent = "Strong";
+            strengthFill.classList.add("strong");
+        }
+    }
+
+
+    // Password validation
+    function validatePassword() {
+
+        const value = password.value;
+
+        const strongPassword =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,30}$/;
+
+        if (value === "") {
+
+            showError(password, "passwordError",
+                "Password is required.");
+
+            return false;
+        }
+
+        if (value.length > 30) {
+
+            showError(password, "passwordError",
+                "Password cannot exceed 30 characters.");
+
+            return false;
+        }
+
+        if (!strongPassword.test(value)) {
+
+            showError(password, "passwordError",
+                "Password must contain uppercase, lowercase, number and special character.");
+
+            return false;
+        }
+
+        showValid(password, "passwordError");
+        return true;
+    }
+
+
+    // Confirm password validation
+    function validateConfirmPassword() {
+
+        if (confirmPassword.value === "") {
+
+            showError(confirmPassword,
+                "confirmPasswordError",
+                "Please confirm your password.");
+
+            return false;
+        }
+
+        if (confirmPassword.value !== password.value) {
+
+            showError(confirmPassword,
+                "confirmPasswordError",
+                "Passwords do not match.");
+
+            return false;
+        }
+
+        showValid(confirmPassword,
+            "confirmPasswordError");
+
+        return true;
+    }
+
+
+    // Terms validation
+    function validateTerms() {
+
+        const error =
+            document.getElementById("termsError");
+
+        if (!terms.checked) {
+
+            error.textContent =
+                "You must accept the Terms and Conditions.";
+
+            return false;
+        }
+
+        error.textContent = "";
+
+        return true;
+    }
+
+
+    // Add real-time validation after interaction
+    fullName.addEventListener("blur", validateName);
+    email.addEventListener("blur", validateEmail);
+    phone.addEventListener("blur", validatePhone);
+    dob.addEventListener("change", validateDOB);
+    address.addEventListener("blur", validateAddress);
+    city.addEventListener("blur", validateCity);
+    state.addEventListener("change", validateState);
+    country.addEventListener("change", function () {
+        validateCountry();
+
+        if (pin.value !== "") {
+            validatePin();
+        }
+    });
+
+    pin.addEventListener("blur", validatePin);
+
+
+    // Password events
+    password.addEventListener("input", function () {
+
+        updatePasswordRequirements();
+
+        if (password.value !== "") {
+            validatePassword();
+        }
+
+        if (confirmPassword.value !== "") {
+            validateConfirmPassword();
+        }
+    });
+
+
+    confirmPassword.addEventListener(
+        "input",
+        validateConfirmPassword
+    );
+
+
+    // Gender change
+    document
+        .querySelectorAll('input[name="gender"]')
+        .forEach(function (radio) {
+
+            radio.addEventListener("change", validateGender);
+
+        });
+
+
+    // Terms change
+    terms.addEventListener("change", validateTerms);
+
+
+    // Show / Hide password
+    document
+        .getElementById("togglePassword")
+        .addEventListener("click", function () {
+
+            if (password.type === "password") {
+
+                password.type = "text";
+                this.textContent = "Hide";
+
+            } else {
+
+                password.type = "password";
+                this.textContent = "Show";
+            }
+        });
+
+
+    // Show / Hide confirm password
+    document
+        .getElementById("toggleConfirmPassword")
+        .addEventListener("click", function () {
+
+            if (confirmPassword.type === "password") {
+
+                confirmPassword.type = "text";
+                this.textContent = "Hide";
+
+            } else {
+
+                confirmPassword.type = "password";
+                this.textContent = "Show";
+            }
+        });
+
+
+    // Form submission
+    form.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        const validations = [
+
+            { element: fullName, valid: validateName() },
+            { element: email, valid: validateEmail() },
+            { element: phone, valid: validatePhone() },
+            { element: dob, valid: validateDOB() },
+            { element: null, valid: validateGender() },
+            { element: address, valid: validateAddress() },
+            { element: city, valid: validateCity() },
+            { element: state, valid: validateState() },
+            { element: country, valid: validateCountry() },
+            { element: pin, valid: validatePin() },
+            { element: password, valid: validatePassword() },
+            { element: confirmPassword, valid: validateConfirmPassword() },
+            { element: terms, valid: validateTerms() }
+
+        ];
+
+
+        const firstInvalid =
+            validations.find(item => !item.valid);
+
+
+        if (firstInvalid) {
+
+            if (firstInvalid.element) {
+                firstInvalid.element.focus();
+            }
+
+            successMessage.style.display = "none";
+
+            return;
+        }
+
+
+        // Successful submission
+        successMessage.style.display = "block";
+
+        successMessage.textContent =
+            "Registration successful!";
+
+        form.reset();
+
+        // Reset validation styles
+        document
+            .querySelectorAll("input, select, textarea")
+            .forEach(function (element) {
+
+                element.classList.remove("valid");
+                element.classList.remove("invalid");
+
+                element.removeAttribute("aria-invalid");
+
+            });
+
+        document
+            .querySelectorAll(".error")
+            .forEach(function (error) {
+
+                error.textContent = "";
+
+            });
+
+        updatePasswordRequirements();
+
+        document.getElementById("strengthText")
+            .textContent = "None";
+
+    });
+
+
+    // Reset button
+    form.addEventListener("reset", function () {
+
+        setTimeout(function () {
+
+            document
+                .querySelectorAll("input, select, textarea")
+                .forEach(function (element) {
+
+                    element.classList.remove("valid");
+                    element.classList.remove("invalid");
+
+                    element.removeAttribute("aria-invalid");
+
+                });
+
+            document
+                .querySelectorAll(".error")
+                .forEach(function (error) {
+
+                    error.textContent = "";
+
+                });
+
+            successMessage.style.display = "none";
+
+            updatePasswordRequirements();
+
+            document.getElementById("strengthText")
+                .textContent = "None";
+
+            document.getElementById("strengthFill")
+                .className = "strength-fill";
+
+            document.getElementById("togglePassword")
+                .textContent = "Show";
+
+            document.getElementById("toggleConfirmPassword")
+                .textContent = "Show";
+
+        }, 0);
+
+    });
+
+</script>
+
+</body>
+</html>
